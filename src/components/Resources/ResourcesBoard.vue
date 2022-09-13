@@ -9,7 +9,8 @@
       >Add Resource</BaseButton
     ></BaseCard
   >
-  <div class="mt-10 w-1/2 h-auto bg-red-600">
+  <div class="mt-10 w-1/2 h-auto">
+    <div class="relative mt-5 ml-5">Test</div>
     <KeepAlive>
       <component :is="selectedTab"> </component>
     </KeepAlive>
@@ -17,12 +18,20 @@
 </template>
 
 <script>
+import { BIconLink45deg } from "bootstrap-icons-vue";
+
 import BaseButton from "../base/BaseButton.vue";
 import BaseCard from "../base/BaseCard.vue";
 import AddResource from "./AddResource.vue";
 import StoredResources from "./StoredResources.vue";
 export default {
-  components: { BaseButton, BaseCard, StoredResources, AddResource },
+  components: {
+    BaseButton,
+    BaseCard,
+    StoredResources,
+    AddResource,
+    testIcon: BIconLink45deg,
+  },
   data() {
     return {
       // selectedTab: "add-resource" or "stored-resources",
