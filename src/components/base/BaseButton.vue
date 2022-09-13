@@ -6,7 +6,7 @@
       mx-4
       text-lg
       font-semibold
-      hover:underline hover:underline-offset-4
+      hover:underline hover:underline-offset-4 hover:text-slate-800
       transition
       duration-200
     "

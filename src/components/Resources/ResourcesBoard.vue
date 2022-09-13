@@ -9,7 +9,7 @@
       >Add Resource</BaseButton
     ></BaseCard
   >
-  <div class="mt-10 w-1/2 h-52 bg-red-600">
+  <div class="mt-10 w-1/2 h-auto bg-red-600">
     <KeepAlive>
       <component :is="selectedTab"> </component>
     </KeepAlive>
@@ -43,6 +43,11 @@ export default {
       ],
     };
   },
+  provide() {
+    return {
+      allResources: this.resourcesList,
+    };
+  },
   methods: {
     setSelectedTab(tab) {
       this.selectedTab = tab;
@@ -52,6 +57,7 @@ export default {
     tabCardClass() {
       return "h-28";
     },
+    // We use these two to change the content of the tab
     resBtnMode() {
       return this.selectedTab === "stored-resources"
         ? "text-white underline underline-offset-4 "
