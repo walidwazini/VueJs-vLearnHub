@@ -1,26 +1,15 @@
 <template>
   <!-- CARD  -->
-  <div
-    class="
-      rounded-xl
-      shadow-md
-      w-1/2
-      h-32
-      bg-blue-900
-      flex flex-row
-      justify-start
-      items-center
-      px-4
-    "
-  >
-    <BaseButton @click="setSelectedTab('stored-resource')" :mode="resBtnMode"
+
+  <BaseCard :extraClass="tabCardClass">
+    <BaseButton @click="setSelectedTab('stored-resources')" :mode="resBtnMode"
       >Stored Resources</BaseButton
     >
     <BaseButton @click="setSelectedTab('add-resource')" :mode="addBtnMode"
       >Add Resource</BaseButton
-    >
-  </div>
-  <div class="mt-14 w-1/2 h-52 bg-red-600">
+    ></BaseCard
+  >
+  <div class="mt-10 w-1/2 h-52 bg-red-600">
     <KeepAlive>
       <component :is="selectedTab"> </component>
     </KeepAlive>
@@ -29,12 +18,16 @@
 
 <script>
 import BaseButton from "../base/BaseButton.vue";
+import BaseCard from "../base/BaseCard.vue";
+import AddResource from "./AddResource.vue";
+import StoredResources from "./StoredResources.vue";
 export default {
-  components: { BaseButton },
+  components: { BaseButton, BaseCard, StoredResources, AddResource },
   data() {
     return {
-      selectedTab: "stored-resource",
-      storedResources: [
+      // selectedTab: "add-resource" or "stored-resources",
+      selectedTab: StoredResources,
+      resourcesList: [
         {
           id: "official-guide",
           title: "Official Guide",
@@ -56,12 +49,16 @@ export default {
     },
   },
   computed: {
+    tabCardClass() {
+      return "h-28";
+    },
     resBtnMode() {
-      return this.selectedTab === "stored-resource"
+      return this.selectedTab === "stored-resources"
         ? "text-white underline underline-offset-4 "
         : null;
     },
     addBtnMode() {
+      // return this.selectedTab === AddResource
       return this.selectedTab === "add-resource"
         ? "text-white underline underline-offset-4"
         : null;
