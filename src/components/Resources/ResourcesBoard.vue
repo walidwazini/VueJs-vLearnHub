@@ -50,16 +50,63 @@ export default {
     return {
       // selectedTab: "add-resource" or "stored-resources",
       selectedTab: StoredResources,
-      kol: 2,
       resourcesList: [
         {
           id: "official-guide",
           title: "Official Guide",
-          description: "The official VUe Js documentation",
+          description: "The official VueJS documentation.",
           link: "https://vuejs.org",
         },
         {
+          id: "search-engine-0-",
+          title: "Google",
+          description: "Learn how to search solution productively",
+          link: "https://google.com",
+        },
+        {
           id: "search-engine",
+          title: "Google",
+          description: "Learn how to search solution productively",
+          link: "https://google.com",
+        },
+        {
+          id: "search-engine123123",
+          title: "Google",
+          description: "Learn how to search solution productively",
+          link: "https://google.com",
+        },
+        {
+          id: "search-engineada",
+          title: "Google",
+          description: "Learn how to search solution productively",
+          link: "https://google.com",
+        },
+        {
+          id: "search-enginesdfsdf",
+          title: "Google",
+          description: "Learn how to search solution productively",
+          link: "https://google.com",
+        },
+        {
+          id: "search-e",
+          title: "Google",
+          description: "Learn how to search solution productively",
+          link: "https://google.com",
+        },
+        {
+          id: "search-engine12",
+          title: "Google",
+          description: "Learn how to search solution productively",
+          link: "https://google.com",
+        },
+        {
+          id: "search-engine34",
+          title: "Google",
+          description: "Learn how to search solution productively",
+          link: "https://google.com",
+        },
+        {
+          id: "search-engine56",
           title: "Google",
           description: "Learn how to search solution productively",
           link: "https://google.com",
@@ -70,11 +117,17 @@ export default {
   provide() {
     return {
       allResources: this.resourcesList,
+      deleteItem: this.removeResource,
     };
   },
   methods: {
     setSelectedTab(tab) {
       this.selectedTab = tab;
+    },
+    removeResource(resId) {
+      const resIndex = this.resourcesList.findIndex((res) => res.id === resId);
+
+      this.resourcesList.splice(resIndex, 1);
     },
   },
   computed: {

@@ -6,11 +6,9 @@
         :key="item.id"
         class="
           m-2
-          pt-4
-          pb-2
-          px-4
+          pb-4
           rounded-lg
-          bg-blue-400
+          bg-blue-600
           shadow-lg
           text-white
           flex flex-col
@@ -20,25 +18,46 @@
         "
       >
         <!-- Tajuk & deleteButon -->
-        <div class="flex justify-between items-center w-full">
-          <h1 class="text-xl text-black font-semibold">{{ item.title }}</h1>
-          <button
+        <div class="realtive w-full">
+          <img
+            src="https://images.unsplash.com/photo-1586125674857-4eb86880905d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+            alt=""
+            class="object-cover object-center w-full rounded-t-md h-28"
+          />
+          <div
             class="
-              text-red-700
-              font-semibold
-              hover:bg-red-300
-              transition
-              duration-300
-              rounded-full
-              p-2
+              relative
+              top-[-4rem]
+              left-[2rem]
+              flex
+              justify-between
+              w-[560px]
             "
           >
-            <BIconTrashFill />
-          </button>
+            <h1
+              class="text-xl hover:text-2xl shadow-sm text-black font-semibold"
+            >
+              {{ item.title }}
+            </h1>
+            <button
+              @click="deleteItem(item.id)"
+              class="
+                text-red-700
+                font-semibold
+                hover:bg-red-300
+                transition
+                duration-300
+                rounded-full
+                p-2
+              "
+            >
+              <BIconTrashFill />
+            </button>
+          </div>
         </div>
         <!-- Info  -->
-        <div class="flex flex-row w-full mt-4 mb-2">
-          <p class="text-slate-900">{{ item.description }}</p>
+        <div class="flex flex-row w-full mb-1 px-10 mt-[-20px]">
+          <p class="text-white">{{ item.description }}</p>
         </div>
         <!-- Link to website  -->
         <div
@@ -47,15 +66,33 @@
             justify-start
             items-center
             w-full
-            mt-1
+            mt-3
             mb-1
+            px-10
             hover:underline hover:underline-offset-2
-            text-blue-900
             font-semibold
-            hover:text-purple-800 hover:cursor-pointer
+            hover:cursor-pointer
           "
         >
-          <a class="">View Resources </a><link-icon />
+          <div
+            class="
+              min-w-max
+              flex
+              py-1
+              px-3
+              rounded-md
+              bg-white
+              text-slate-800
+              hover:bg-slate-400
+              transition
+              duration-300
+              shadow-sm
+              border-white
+              hover:border-red-500
+            "
+          >
+            <a class="" v-bind:href="item.link">Website</a><link-icon />
+          </div>
         </div>
       </li>
     </ul>
@@ -69,7 +106,7 @@ export default {
     BIconTrashFill,
     linkIcon: BIconLink45deg,
   },
-  inject: ["allResources"],
+  inject: ["allResources", "deleteItem"],
 };
 </script>
 

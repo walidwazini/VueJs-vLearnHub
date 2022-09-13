@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-slate-700 w-full h-[100vh]">
+  <div class="bg-slate-700 w-full h-full">
     <NavBar />
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
     <div class="mt-14 flex flex-col justify-center items-center">
