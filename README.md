@@ -1,24 +1,32 @@
 # vlearnhub-1
 
-## Project setup
+- Demo project for Vue3 and Tailwindcss
+
+### Setup Tailwindcss
+
+1. Install tailwindcss, etc..
+
 ```
-npm install
+ npm install  tailwindcss@latest postcss@latest autoprefixer@latest
 ```
 
-### Compiles and hot-reloads for development
+2.  Generate configuration files
+
 ```
-npm run serve
+npx tailwindcss init -p
 ```
 
-### Compiles and minifies for production
+3. Configure `tailwind.config.js`, paste the given code into it
+
 ```
-npm run build
+  purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+4. Create `./src/index.css/`
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
