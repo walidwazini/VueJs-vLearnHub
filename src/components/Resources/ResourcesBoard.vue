@@ -10,7 +10,20 @@
     ></BaseCard
   >
   <div class="mt-10 w-1/2 h-auto">
-    <div class="relative mt-5 ml-5">Test</div>
+    <KeepAlive>
+      <div
+        v-if="selectedTab === 'stored-resources'"
+        class="relative mt-5 ml-5 text-2xl text-white"
+      >
+        <archieve-icon />
+      </div>
+      <div
+        v-else-if="selectedTab === 'add-resource'"
+        class="relative mt-5 ml-5 text-2xl text-white"
+      >
+        <add-new-icon />
+      </div>
+    </KeepAlive>
     <KeepAlive>
       <component :is="selectedTab"> </component>
     </KeepAlive>
@@ -18,7 +31,7 @@
 </template>
 
 <script>
-import { BIconLink45deg } from "bootstrap-icons-vue";
+import { BIconArchive, BIconFileEarmarkPlus } from "bootstrap-icons-vue";
 
 import BaseButton from "../base/BaseButton.vue";
 import BaseCard from "../base/BaseCard.vue";
@@ -30,12 +43,14 @@ export default {
     BaseCard,
     StoredResources,
     AddResource,
-    testIcon: BIconLink45deg,
+    archieveIcon: BIconArchive,
+    addNewIcon: BIconFileEarmarkPlus,
   },
   data() {
     return {
       // selectedTab: "add-resource" or "stored-resources",
       selectedTab: StoredResources,
+      kol: 2,
       resourcesList: [
         {
           id: "official-guide",
