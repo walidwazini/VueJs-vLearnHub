@@ -20,7 +20,7 @@
         <!-- Tajuk & deleteButon -->
         <div class="realtive w-full">
           <img
-            src="https://images.unsplash.com/photo-1586125674857-4eb86880905d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
+            :src="item.image || imageDef"
             alt=""
             class="object-cover object-center w-full rounded-t-md h-28"
           />
@@ -106,7 +106,19 @@ export default {
     BIconTrashFill,
     linkIcon: BIconLink45deg,
   },
+  data() {
+    return {
+      imageDef:
+        "https://images.unsplash.com/photo-1586125674857-4eb86880905d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
+      rand: 1,
+    };
+  },
   inject: ["allResources", "deleteItem"],
+  methods: {
+    getImage(pic) {
+      return require(pic);
+    },
+  },
 };
 </script>
 

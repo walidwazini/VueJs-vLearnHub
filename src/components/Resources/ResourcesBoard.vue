@@ -49,12 +49,15 @@ export default {
   data() {
     return {
       // selectedTab: "add-resource" or "stored-resources",
-      selectedTab: StoredResources,
+      // selectedTab: StoredResources,
+      selectedTab: AddResource,
       resourcesList: [
         {
           id: "official-guide",
-          title: "Official Guide",
+          title: "Vue JS",
           description: "The official VueJS documentation.",
+          image:
+            "https://images.ctfassets.net/aq13lwl6616q/1l0V8UVa67J2sBaci1BrWr/67b883dc9079ba82b016edfc8ce9a1c1/Complete_Vue_Zero_to_Mastery.png",
           link: "https://vuejs.org",
         },
         {
@@ -63,16 +66,13 @@ export default {
           description: "Learn how to search solution productively",
           link: "https://google.com",
         },
+
         {
-          id: "search-engine",
-          title: "Google",
+          id: "react-js-382",
+          title: "React JS",
           description: "Learn how to search solution productively",
-          link: "https://google.com",
-        },
-        {
-          id: "search-engine123123",
-          title: "Google",
-          description: "Learn how to search solution productively",
+          image:
+            "https://ares.decipherzone.com/blog-manager/uploads/banner_webp_da06d145-93f9-4df9-8c7e-1e2c332c3a4a.webp",
           link: "https://google.com",
         },
         {
