@@ -30,3 +30,7 @@ npx tailwindcss init -p
 @tailwind components;
 @tailwind utilities;
 ```
+
+### Extra Tips
+
+[How to use tailwind/css from]('https://www.educative.io/answers/how-to-use-the-form-plugin-in-tailwind-css')
