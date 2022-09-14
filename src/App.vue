@@ -2,7 +2,7 @@
   <div class="bg-slate-700 w-full min-h-[100vh]">
     <NavBar />
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <div class="mt-14 flex flex-col justify-center items-center">
+    <div class="mt-8 flex flex-col justify-center items-center">
       <ResourcesBoard />
     </div>
   </div>
