@@ -75,42 +75,6 @@ export default {
             "https://ares.decipherzone.com/blog-manager/uploads/banner_webp_da06d145-93f9-4df9-8c7e-1e2c332c3a4a.webp",
           link: "https://google.com",
         },
-        {
-          id: "search-engineada",
-          title: "Google",
-          description: "Learn how to search solution productively",
-          link: "https://google.com",
-        },
-        {
-          id: "search-enginesdfsdf",
-          title: "Google",
-          description: "Learn how to search solution productively",
-          link: "https://google.com",
-        },
-        {
-          id: "search-e",
-          title: "Google",
-          description: "Learn how to search solution productively",
-          link: "https://google.com",
-        },
-        {
-          id: "search-engine12",
-          title: "Google",
-          description: "Learn how to search solution productively",
-          link: "https://google.com",
-        },
-        {
-          id: "search-engine34",
-          title: "Google",
-          description: "Learn how to search solution productively",
-          link: "https://google.com",
-        },
-        {
-          id: "search-engine56",
-          title: "Google",
-          description: "Learn how to search solution productively",
-          link: "https://google.com",
-        },
       ],
     };
   },
@@ -118,11 +82,23 @@ export default {
     return {
       allResources: this.resourcesList,
       deleteItem: this.removeResource,
+      onAddResource: this.addNewResource,
     };
   },
   methods: {
     setSelectedTab(tab) {
       this.selectedTab = tab;
+    },
+    addNewResource(title, description, web, imageUrl) {
+      const newResource = {
+        id: new Date().toISOString(),
+        title: title,
+        description,
+        link: web,
+        image: imageUrl,
+      };
+      this.resourcesList.unshift(newResource);
+      this.selectedTab = "stored-resources";
     },
     removeResource(resId) {
       const resIndex = this.resourcesList.findIndex((res) => res.id === resId);
