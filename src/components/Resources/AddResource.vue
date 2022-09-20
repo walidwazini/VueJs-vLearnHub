@@ -1,6 +1,6 @@
 <template>
   <form
-    @submit.prevent="submitHandler"
+    @submit.prevent="submitNew"
     class="
       min-h-[10vh]
       bg-[#25258f]
@@ -15,6 +15,7 @@
     "
   >
     <div class="w-[370px] mt-5 my-2">
+      {{ VUE_APP_FIREBASE }}
       <label class="font-xl font-semibold text-white">Title</label>
       <input
         type="text"
@@ -118,6 +119,8 @@
 </template>
 
 <script>
+import FIREBASE_URL from "../../firebase";
+
 export default {
   data() {
     return {
@@ -126,7 +129,7 @@ export default {
   },
   inject: ["onAddResource"],
   methods: {
-    submitHandler() {
+    submitNew() {
       const enteredTitle = this.$refs.titleInput.value;
       const enteredDesc = this.$refs.descInput.value;
       const enteredWebUrl = this.$refs.webLinkInput.value;
@@ -142,12 +145,56 @@ export default {
         this.$inputValid = true;
         return;
       }
-      this.onAddResource(
-        enteredTitle,
-        enteredDesc,
-        enteredWebUrl,
-        enteredImgUrl
-      );
+      fetch(FIREBASE_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: enteredTitle,
+          description: enteredDesc,
+          web: enteredWebUrl,
+          image: enteredImgUrl,
+        }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            // ..
+          } else {
+            throw new Error("Could not save data");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          // this.errorSendingData = 'Sending data failed. Something is wrong.';
+        });
+      this.$refs.titleInput.value = "";
+      this.$refs.descInput.value = "";
+      this.$refs.webLinkInput.value = "";
+      this.$refs.imgLinkInput.value = "";
+    },
+    submitHandler() {
+      // const enteredTitle = this.$refs.titleInput.value;
+      // const enteredDesc = this.$refs.descInput.value;
+      // const enteredWebUrl = this.$refs.webLinkInput.value;
+      // const enteredImgUrl = this.$refs.imgLinkInput.value;
+
+      // const conditionOne =
+      //   enteredTitle.trim() === "" ||
+      //   enteredDesc.trim() === "" ||
+      //   enteredWebUrl.trim() === "" ||
+      //   enteredImgUrl.trim() === "";
+
+      // if (conditionOne) {
+      //   this.$inputValid = true;
+      //   return;
+      // }
+      // this.onAddResource(
+      //   enteredTitle,
+      //   enteredDesc,
+      //   enteredWebUrl,
+      //   enteredImgUrl
+      // );
       this.$refs.titleInput.value = "";
       this.$refs.descInput.value = "";
       this.$refs.webLinkInput.value = "";
