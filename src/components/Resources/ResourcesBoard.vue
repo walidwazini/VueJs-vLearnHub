@@ -10,6 +10,13 @@
     ></BaseCard
   >
   <div class="mt-10 w-1/2 h-auto">
+    <div class="bg-red-500 h-[300px] w-[500px]">
+      <img
+        :src="this.testImage"
+        alt=""
+        class="object-cover object-center w-full"
+      />
+    </div>
     <KeepAlive>
       <div
         v-if="selectedTab === 'stored-resources'"
@@ -32,11 +39,14 @@
 
 <script>
 import { BIconArchive, BIconFileEarmarkPlus } from "bootstrap-icons-vue";
+import axios from "axios";
 
 import BaseButton from "../base/BaseButton.vue";
 import BaseCard from "../base/BaseCard.vue";
 import AddResource from "./AddResource.vue";
 import StoredResources from "./StoredResources.vue";
+import FIREBASE_URL from "@/firebase";
+
 export default {
   components: {
     BaseButton,
@@ -51,6 +61,8 @@ export default {
       // selectedTab: "add-resource" or "stored-resources",
       // selectedTab: StoredResources,
       selectedTab: AddResource,
+      testImage: "",
+      loadedData: [],
       resourcesList: [
         {
           id: "official-guide",
@@ -86,6 +98,26 @@ export default {
     };
   },
   methods: {
+    async fetchPost() {
+      try {
+        // We get res in object type
+        const { data } = await axios.get(FIREBASE_URL);
+        console.log(data);
+        // Convert object to array
+        for (const id in data) {
+          this.loadedData.push({
+            id: id,
+            title: data[id].title,
+            description: data[id].description,
+            image: data[id].imageFile,
+          });
+        }
+        console.log(this.loadedData);
+        this.testImage = this.loadedData[0].image;
+      } catch (err) {
+        alert(err);
+      }
+    },
     setSelectedTab(tab) {
       this.selectedTab = tab;
     },
@@ -122,6 +154,10 @@ export default {
         ? "text-white underline underline-offset-4"
         : null;
     },
+  },
+  mounted() {
+    // ? Mounted is liek using useEffect() in ReactJS
+    this.fetchPost();
   },
 };
 </script>
