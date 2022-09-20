@@ -54,7 +54,7 @@
         >
       </div>
     </div>
-    <div class="w-[370px] my-2">
+    <!-- <div class="w-[370px] my-2">
       <label class="font-xl font-semibold text-white">Image URL</label>
       <div class="flex">
         <input
@@ -75,9 +75,9 @@
           >🔗</span
         >
       </div>
-    </div>
+    </div> -->
 
-    <!-- <fieldset className="w-[370px] mt-2 space-y-1 dark:text-gray-100">
+    <fieldset className="w-[370px] mt-2 space-y-1 dark:text-gray-100">
       <label for="files" className="block text-sm font-medium"
         >Image File</label
       >
@@ -85,11 +85,12 @@
         <input
           type="file"
           name="files"
+          @change="uploadImage"
           id="files"
           className="px-8 py-12 border-2 border-dashed rounded-md dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800"
         />
       </div>
-    </fieldset> -->
+    </fieldset>
 
     <button
       type="submit"
@@ -125,21 +126,38 @@ export default {
   data() {
     return {
       inputValid: false,
+      fileToUpload: "",
     };
   },
   inject: ["onAddResource"],
   methods: {
+    async convertToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+
+        fileReader.onload = () => resolve(fileReader.result);
+        console.log(fileReader.result);
+
+        fileReader.onerror = (err) => reject(err);
+      });
+    },
+    async uploadImage(e) {
+      const imageFile = e.target.files[0];
+      const fileBase64 = await this.convertToBase64(imageFile);
+      this.fileToUpload = fileBase64;
+    },
     submitNew() {
       const enteredTitle = this.$refs.titleInput.value;
       const enteredDesc = this.$refs.descInput.value;
       const enteredWebUrl = this.$refs.webLinkInput.value;
-      const enteredImgUrl = this.$refs.imgLinkInput.value;
+      // const enteredImgUrl = this.$refs.imgLinkInput.value;
 
       const conditionOne =
         enteredTitle.trim() === "" ||
         enteredDesc.trim() === "" ||
-        enteredWebUrl.trim() === "" ||
-        enteredImgUrl.trim() === "";
+        enteredWebUrl.trim() === "";
+      // enteredImgUrl.trim() === "";
 
       if (conditionOne) {
         this.$inputValid = true;
@@ -154,7 +172,8 @@ export default {
           title: enteredTitle,
           description: enteredDesc,
           web: enteredWebUrl,
-          image: enteredImgUrl,
+          // imageUrl: enteredImgUrl,
+          imageFile: this.fileToUpload,
         }),
       })
         .then((response) => {
@@ -171,7 +190,6 @@ export default {
       this.$refs.titleInput.value = "";
       this.$refs.descInput.value = "";
       this.$refs.webLinkInput.value = "";
-      this.$refs.imgLinkInput.value = "";
     },
     submitHandler() {
       // const enteredTitle = this.$refs.titleInput.value;
