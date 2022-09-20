@@ -2,7 +2,7 @@
   <div class="m-2">
     <ul class="flex flex-col items-center justify-center">
       <li
-        v-for="item in allResources"
+        v-for="item in dataFromFirebase"
         :key="item.id"
         class="
           m-2
@@ -40,7 +40,7 @@
               {{ item.title }}
             </h1>
             <button
-              @click="deleteItem(item.id)"
+              @click="deleteHandler(dataFromFirebase, item.id)"
               class="
                 text-red-700
                 font-semibold
@@ -91,7 +91,12 @@
               hover:border-red-500
             "
           >
-            <a class="" v-bind:href="item.link">Website</a><link-icon />
+            <a
+              class=""
+              target="_blank"
+              :href="item.link || `https://www.github.com/`"
+              >Website</a
+            ><link-icon />
           </div>
         </div>
       </li>
@@ -101,6 +106,10 @@
 
 <script>
 import { BIconTrashFill, BIconLink45deg } from "bootstrap-icons-vue";
+import axios from "axios";
+
+import FIREBASE_URL from "@/firebase";
+
 export default {
   components: {
     BIconTrashFill,
@@ -110,13 +119,17 @@ export default {
     return {
       imageDef:
         "https://images.unsplash.com/photo-1586125674857-4eb86880905d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-      rand: 1,
     };
   },
-  inject: ["allResources", "deleteItem"],
+  inject: ["allResources", "deleteItem", "dataFromFirebase"],
   methods: {
     getImage(pic) {
       return require(pic);
+    },
+    deleteHandler(result, id) {
+      axios.delete(FIREBASE_URL).then(() => {
+        result.splice(id, 1);
+      });
     },
   },
 };

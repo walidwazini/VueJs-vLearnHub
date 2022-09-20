@@ -32,11 +32,14 @@
 
 <script>
 import { BIconArchive, BIconFileEarmarkPlus } from "bootstrap-icons-vue";
+import axios from "axios";
 
 import BaseButton from "../base/BaseButton.vue";
 import BaseCard from "../base/BaseCard.vue";
 import AddResource from "./AddResource.vue";
 import StoredResources from "./StoredResources.vue";
+import FIREBASE_URL from "@/firebase";
+
 export default {
   components: {
     BaseButton,
@@ -49,8 +52,9 @@ export default {
   data() {
     return {
       // selectedTab: "add-resource" or "stored-resources",
-      // selectedTab: StoredResources,
-      selectedTab: AddResource,
+      selectedTab: StoredResources,
+      // selectedTab: AddResource,
+      loadedData: [],
       resourcesList: [
         {
           id: "official-guide",
@@ -83,9 +87,28 @@ export default {
       allResources: this.resourcesList,
       deleteItem: this.removeResource,
       onAddResource: this.addNewResource,
+      dataFromFirebase: this.loadedData,
     };
   },
   methods: {
+    async fetchPost() {
+      try {
+        // We get data as object type
+        const { data } = await axios.get(FIREBASE_URL);
+
+        // Convert object into array
+        for (const id in data) {
+          this.loadedData.push({
+            id: id,
+            title: data[id].title,
+            description: data[id].description,
+            image: data[id].imageFile,
+          });
+        }
+      } catch (err) {
+        alert(err);
+      }
+    },
     setSelectedTab(tab) {
       this.selectedTab = tab;
     },
@@ -105,6 +128,10 @@ export default {
 
       this.resourcesList.splice(resIndex, 1);
     },
+  },
+  mounted() {
+    // ? Mounted is like using useEffect() in ReactJS
+    this.fetchPost();
   },
   computed: {
     tabCardClass() {
